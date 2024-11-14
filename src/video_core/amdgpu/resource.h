@@ -293,9 +293,10 @@ struct Image {
     }
 
     bool NeedsNormalizationPatch() const {
-        std::cout << "Is needs patch " << (GetNumberFmt() == AmdGpu::NumberFormat::Unorm) << " " << (GetDataFmt() == AmdGpu::DataFormat::Format32_32_32_32) << "\n";
+        //std::cout << "Is needs patch " << (GetNumberFmt() == AmdGpu::NumberFormat::Unorm) << " " << (GetDataFmt() == AmdGpu::DataFormat::Format32_32_32_32) << "\n";
         if (GetNumberFmt() == AmdGpu::NumberFormat::Unorm ||
             GetNumberFmt() == AmdGpu::NumberFormat::Snorm) {
+            return true;
             switch (GetDataFmt()) {
             case AmdGpu::DataFormat::Format32:
             case AmdGpu::DataFormat::Format32_32:
