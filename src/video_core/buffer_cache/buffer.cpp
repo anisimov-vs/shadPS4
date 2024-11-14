@@ -119,12 +119,12 @@ vk::BufferView Buffer::View(u32 offset, u32 size, bool is_written, AmdGpu::DataF
         .usage = is_written ? vk::BufferUsageFlagBits2KHR::eStorageTexelBuffer
                             : vk::BufferUsageFlagBits2KHR::eUniformTexelBuffer,
     };
-    const auto fmt = dfmt != AmdGpu::DataFormat::Format32_32_32 ? Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt) : vk::Format::eR32G32B32A32Uint;
+    const auto fmt = dfmt != AmdGpu::DataFormat::Format32_32_32 ? Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt) : Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, AmdGpu::NumberFormat::Unorm);//vk::Format::eR32G32B32A32Uint;
     const auto rnge = std::min(dfmt == AmdGpu::DataFormat::Format32_32_32 ? Common::AlignUp(size, 16u) : size, instance->MaxTexelBufferElements() * 4);
     const vk::BufferViewCreateInfo view_ci = {
         .pNext = instance->IsMaintenance5Supported() ? &usage_flags : nullptr,
         .buffer = buffer.buffer,
-        .format = Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt),
+        .format = fmt; //Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt),
         .offset = offset,
         .range = rnge, //size,
 

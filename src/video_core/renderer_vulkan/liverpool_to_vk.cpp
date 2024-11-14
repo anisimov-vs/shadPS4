@@ -415,7 +415,7 @@ static constexpr SurfaceFormatInfo CreateSurfaceFormatInfo(const AmdGpu::DataFor
 
 std::span<const SurfaceFormatInfo> SurfaceFormats() {
     static constexpr std::array formats{
-                CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32, AmdGpu::NumberFormat::Unorm,
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32, AmdGpu::NumberFormat::Unorm,
                                 vk::Format::eR32Uint),
         CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32, AmdGpu::NumberFormat::Snorm,
                                 vk::Format::eR32Sint),
