@@ -8,6 +8,7 @@
 #include "common/bit_field.h"
 #include "common/types.h"
 #include "video_core/amdgpu/pixel_format.h"
+#include <iostream>
 
 namespace AmdGpu {
 
@@ -299,6 +300,7 @@ struct Image {
             case AmdGpu::DataFormat::Format32_32:
             case AmdGpu::DataFormat::Format32_32_32:
             case AmdGpu::DataFormat::Format32_32_32_32:
+                std::cout << "Needs patch\n";
                 return true;
             default:
                 return false;
