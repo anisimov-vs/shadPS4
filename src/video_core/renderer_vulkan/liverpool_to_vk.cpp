@@ -415,6 +415,25 @@ static constexpr SurfaceFormatInfo CreateSurfaceFormatInfo(const AmdGpu::DataFor
 
 std::span<const SurfaceFormatInfo> SurfaceFormats() {
     static constexpr std::array formats{
+                CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32, AmdGpu::NumberFormat::Unorm,
+                                vk::Format::eR32Uint),
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32, AmdGpu::NumberFormat::Snorm,
+                                vk::Format::eR32Sint),
+        // 32_32
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32, AmdGpu::NumberFormat::Unorm,
+                                vk::Format::eR32G32Uint),
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32, AmdGpu::NumberFormat::Snorm,
+                                vk::Format::eR32G32Sint),
+        // 32_32_32
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32, AmdGpu::NumberFormat::Unorm,
+                                vk::Format::eR32G32B32Uint),
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32, AmdGpu::NumberFormat::Snorm,
+                                vk::Format::eR32G32B32Sint),
+        // 32_32_32_32
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32_32, AmdGpu::NumberFormat::Unorm,
+                                vk::Format::eR32G32B32A32Uint),
+        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32_32, AmdGpu::NumberFormat::Snorm,
+                                vk::Format::eR32G32B32A32Sint),
         // Invalid
         CreateSurfaceFormatInfo(AmdGpu::DataFormat::FormatInvalid, AmdGpu::NumberFormat::Unorm,
                                 vk::Format::eUndefined),
@@ -643,25 +662,7 @@ std::span<const SurfaceFormatInfo> SurfaceFormats() {
          * see shader_recompiler/ir/passes/resource_tracking_pass.cpp
          */
         // 32
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32, AmdGpu::NumberFormat::Unorm,
-                                vk::Format::eR32Uint),
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32, AmdGpu::NumberFormat::Snorm,
-                                vk::Format::eR32Sint),
-        // 32_32
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32, AmdGpu::NumberFormat::Unorm,
-                                vk::Format::eR32G32Uint),
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32, AmdGpu::NumberFormat::Snorm,
-                                vk::Format::eR32G32Sint),
-        // 32_32_32
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32, AmdGpu::NumberFormat::Unorm,
-                                vk::Format::eR32G32B32Uint),
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32, AmdGpu::NumberFormat::Snorm,
-                                vk::Format::eR32G32B32Sint),
-        // 32_32_32_32
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32_32, AmdGpu::NumberFormat::Unorm,
-                                vk::Format::eR32G32B32A32Uint),
-        CreateSurfaceFormatInfo(AmdGpu::DataFormat::Format32_32_32_32, AmdGpu::NumberFormat::Snorm,
-                                vk::Format::eR32G32B32A32Sint),
+
     };
     return formats;
 }
