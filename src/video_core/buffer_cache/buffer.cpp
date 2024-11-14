@@ -122,8 +122,7 @@ vk::BufferView Buffer::View(u32 offset, u32 size, bool is_written, AmdGpu::DataF
     };
     const auto fmt = dfmt != AmdGpu::DataFormat::Format32_32_32 ? Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt) : Vulkan::LiverpoolToVK::SurfaceFormat(AmdGpu::DataFormat::Format32_32_32_32, AmdGpu::NumberFormat::Unorm);//vk::Format::eR32G32B32A32Uint;
     const auto rnge = std::min(dfmt == AmdGpu::DataFormat::Format32_32_32 ? Common::AlignUp(size, 16u) : size, instance->MaxTexelBufferElements() * 4);
-    if (dfmt == AmdGpu::DataFormat::Format32_32_32)
-        std::cout << "Convert to Format32_32_32_32\n";
+
     const vk::BufferViewCreateInfo view_ci = {
         .pNext = instance->IsMaintenance5Supported() ? &usage_flags : nullptr,
         .buffer = buffer.buffer,
