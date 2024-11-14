@@ -124,7 +124,7 @@ vk::BufferView Buffer::View(u32 offset, u32 size, bool is_written, AmdGpu::DataF
     const vk::BufferViewCreateInfo view_ci = {
         .pNext = instance->IsMaintenance5Supported() ? &usage_flags : nullptr,
         .buffer = buffer.buffer,
-        .format = fmt; //Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt),
+        .format = fmt, //Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt),
         .offset = offset,
         .range = rnge, //size,
 
