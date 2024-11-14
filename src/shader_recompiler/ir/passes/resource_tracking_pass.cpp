@@ -10,6 +10,7 @@
 #include "shader_recompiler/ir/program.h"
 #include "video_core/amdgpu/pixel_format.h"
 #include "video_core/amdgpu/resource.h"
+#include <iostream>
 
 namespace Shader::Optimization {
 namespace {
@@ -422,7 +423,7 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
     if (!image.NeedsNormalizationPatch()) {
         return;
     }
-
+    std::cout << "Patching\n";
     bool is_signed = image.GetNumberFmt() == AmdGpu::NumberFormat::Snorm;
     bool is_atomic = IsImageAtomicInstruction(inst);
     bool is_write = is_atomic || inst.GetOpcode() == IR::Opcode::ImageWrite;
