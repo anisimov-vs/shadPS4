@@ -296,6 +296,7 @@ struct Image {
         //std::cout << "Is needs patch " << (GetNumberFmt() == AmdGpu::NumberFormat::Unorm) << " " << GetDataFmt() << "\n";
         if (GetNumberFmt() == AmdGpu::NumberFormat::Unorm ||
             GetNumberFmt() == AmdGpu::NumberFormat::Snorm) {
+            return true;
             switch (GetDataFmt()) {
             case DataFormat::Format32:
             case DataFormat::Format32_32:
