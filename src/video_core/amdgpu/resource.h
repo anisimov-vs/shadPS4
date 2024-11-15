@@ -296,7 +296,7 @@ struct Image {
         
         if (GetNumberFmt() == AmdGpu::NumberFormat::Unorm ||
             GetNumberFmt() == AmdGpu::NumberFormat::Snorm) {
-            std::cout << "Format: " << AmdGpu::NameOf(GetDataFmt()) << "\n";
+            
             switch (GetDataFmt()) {
             case DataFormat::Format32:
             case DataFormat::Format32_32:
