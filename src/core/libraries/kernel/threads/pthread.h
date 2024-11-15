@@ -9,6 +9,7 @@
 #include <semaphore>
 #include <shared_mutex>
 #include <boost/intrusive/list.hpp>
+#include <atomic>
 
 #include "common/enum.h"
 #include "core/libraries/kernel/time.h"
