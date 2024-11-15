@@ -450,9 +450,9 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
     const auto patch_read = [&]() {
         IR::Value data = IR::Value(ir.CopyInst(inst));
         if (is_signed) {
-            data = ir.ConvertSToF(32, 32, data);
+            data = ir.ConvertSToF(8, 8, data);
         } else {
-            data = ir.ConvertUToF(32, 32, data);
+            data = ir.ConvertUToF(8, 8, data);
         }
 
         data = ir.FPMul(IR::F32(data), get_mul_vec());
@@ -464,9 +464,9 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
         data = ir.FPMul(data, get_mul_vec());
 
         if (is_signed) {
-            inst.SetArg(2, ir.ConvertFToS(32, data));
+            inst.SetArg(2, ir.ConvertFToS(8, data));
         } else {
-            inst.SetArg(2, ir.ConvertFToU(32, data));
+            inst.SetArg(2, ir.ConvertFToU(8, data));
         }
 
         // Atomic instructions return the old value, so we need to patch the read.
