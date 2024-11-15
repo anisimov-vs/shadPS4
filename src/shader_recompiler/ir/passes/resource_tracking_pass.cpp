@@ -424,7 +424,7 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
         return;
     }
     try {
-    std::cout << "Patching\n";
+    std::cout << "Patching" << AmdGpu::NameOf(image.GetDataFmt()) << "\n";
     bool is_signed = image.GetNumberFmt() == AmdGpu::NumberFormat::Snorm;
     bool is_atomic = IsImageAtomicInstruction(inst);
     bool is_write = is_atomic || inst.GetOpcode() == IR::Opcode::ImageWrite;
