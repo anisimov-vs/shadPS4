@@ -424,7 +424,7 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
         return;
     }
     
-    std::cout << "Patching" << AmdGpu::NameOf(image.GetDataFmt()) << "\n";
+    std::cout << "Patching " << AmdGpu::NameOf(image.GetDataFmt()) << "\n";
     bool is_signed = image.GetNumberFmt() == AmdGpu::NumberFormat::Snorm;
     bool is_atomic = IsImageAtomicInstruction(inst);
     bool is_write = is_atomic || inst.GetOpcode() == IR::Opcode::ImageWrite;
@@ -446,7 +446,7 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
             UNREACHABLE();
         }
     };
-    std::cout << num_components << "\n";
+    
     const auto patch_read = [&]() {
         IR::Value data = IR::Value(ir.CopyInst(inst));
         if (is_signed) {
@@ -478,6 +478,8 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
         multipier = ir.FPRecip(multipier);
         patch_read();
     }
+    
+    std::cout << "Patched\n";
 }
 
 void PatchImageSampleInstruction(IR::Block& block, IR::Inst& inst, Info& info,
