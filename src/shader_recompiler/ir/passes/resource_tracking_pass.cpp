@@ -431,7 +431,7 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
     int num_components = AmdGpu::NumComponents(image.GetDataFmt());
 
     IR::F32 multipier = ir.Imm32(is_signed ? 2147483647.0f : 4294967295.0f);
-    std::cout << num_components << "\n";
+    
     const auto get_mul_vec = [&]() -> IR::F32 {
         switch (num_components) {
         case 1:
@@ -446,7 +446,7 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
             UNREACHABLE();
         }
     };
-
+    std::cout << num_components << "\n";
     const auto patch_read = [&]() {
         IR::Value data = IR::Value(ir.CopyInst(inst));
         if (is_signed) {
