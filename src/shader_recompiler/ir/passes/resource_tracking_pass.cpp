@@ -423,7 +423,7 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
     if (!image.NeedsNormalizationPatch()) {
         return;
     }
-    try {
+    
     std::cout << "Patching" << AmdGpu::NameOf(image.GetDataFmt()) << "\n";
     bool is_signed = image.GetNumberFmt() == AmdGpu::NumberFormat::Snorm;
     bool is_atomic = IsImageAtomicInstruction(inst);
@@ -477,9 +477,6 @@ void PatchNormalization(IR::Inst& inst, IR::IREmitter& ir, const AmdGpu::Image& 
     } else {
         multipier = ir.FPRecip(multipier);
         patch_read();
-    }
-    } catch(...) {
-        return;
     }
 }
 
