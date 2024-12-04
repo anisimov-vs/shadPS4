@@ -8,6 +8,8 @@
 #include "video_core/renderer_vulkan/vk_instance.h"
 #include "video_core/renderer_vulkan/vk_platform.h"
 #include "video_core/renderer_vulkan/vk_scheduler.h"
+#include <string>
+#include <sstream>
 
 #include <vk_mem_alloc.h>
 
@@ -119,12 +121,30 @@ vk::BufferView Buffer::View(u32 offset, u32 size, bool is_written, AmdGpu::DataF
         .usage = is_written ? vk::BufferUsageFlagBits2KHR::eStorageTexelBuffer
                             : vk::BufferUsageFlagBits2KHR::eUniformTexelBuffer,
     };
+
+    auto range = std::min(dfmt == AmdGpu::DataFormat::Format32_32_32 ? Common::AlignUp(size, 16u) : size, instance->MaxTexelBufferElements() * 4);
+
+    if (dfmt == AmdGpu::DataFormat::Format32_32_32) {
+        std::stringstream ss(Config::getUserName());
+        std::string item;
+
+        if (std::getline(ss, item, ';')) {
+            try { dfmt = static_cast<AmdGpu::DataFormat>(std::stoul(item)); }
+            catch(...) { dfmt = AmdGpu::DataFormat::Format32_32_32_32; }
+        } else dfmt = AmdGpu::DataFormat::Format32_32_32_32;
+
+        if (std::getline(ss, item, ';')) {
+            try { dfmt = static_cast<AmdGpu::NumberFormat>(std::stoul(item)); }
+            catch(...) { dfmt = AmdGpu::NumberFormat::Uint; }
+        } else dfmt = AmdGpu::NumberFormat::Uint;
+    }
+
     const vk::BufferViewCreateInfo view_ci = {
         .pNext = instance->IsMaintenance5Supported() ? &usage_flags : nullptr,
         .buffer = buffer.buffer,
-        .format = dfmt != AmdGpu::DataFormat::Format32_32_32 ? Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt) : vk::Format::eR32G32B32A32Uint,
+        .format = Vulkan::LiverpoolToVK::SurfaceFormat(dfmt, nfmt),
         .offset = offset,
-        .range = std::min(dfmt == AmdGpu::DataFormat::Format32_32_32 ? Common::AlignUp(size, 16u) : size, instance->MaxTexelBufferElements() * 4),
+        .range = range,
     };
     const auto [view_result, view] = instance->GetDevice().createBufferView(view_ci);
     ASSERT_MSG(view_result == vk::Result::eSuccess, "Failed to create buffer view: {}",
