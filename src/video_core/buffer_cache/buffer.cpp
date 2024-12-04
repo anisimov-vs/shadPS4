@@ -8,6 +8,8 @@
 #include "video_core/renderer_vulkan/vk_instance.h"
 #include "video_core/renderer_vulkan/vk_platform.h"
 #include "video_core/renderer_vulkan/vk_scheduler.h"
+#include "common/config.h"
+
 #include <string>
 #include <sstream>
 
@@ -134,9 +136,9 @@ vk::BufferView Buffer::View(u32 offset, u32 size, bool is_written, AmdGpu::DataF
         } else dfmt = AmdGpu::DataFormat::Format32_32_32_32;
 
         if (std::getline(ss, item, ';')) {
-            try { dfmt = static_cast<AmdGpu::NumberFormat>(std::stoul(item)); }
-            catch(...) { dfmt = AmdGpu::NumberFormat::Uint; }
-        } else dfmt = AmdGpu::NumberFormat::Uint;
+            try { nfmt = static_cast<AmdGpu::NumberFormat>(std::stoul(item)); }
+            catch(...) { }
+        }
     }
 
     const vk::BufferViewCreateInfo view_ci = {
