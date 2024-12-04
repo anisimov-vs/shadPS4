@@ -324,6 +324,8 @@ public:
     void EmitVertex();
     void EmitPrimitive();
 
+    [[nodiscard]] Inst* CopyInst(const Inst& inst);
+
 private:
     IR::Block::iterator insertion_point;
 
