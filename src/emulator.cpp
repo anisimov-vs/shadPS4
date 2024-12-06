@@ -75,6 +75,9 @@ Emulator::Emulator() {
     LOG_INFO(Config, "Vulkan rdocMarkersEnable: {}", Config::vkMarkersEnabled());
     LOG_INFO(Config, "Vulkan crashDiagnostics: {}", Config::vkCrashDiagnosticEnabled());
 
+    // Create stdin/stdout/stderr
+    Common::Singleton<FileSys::HandleTable>::Instance()->CreateStdHandles();
+
     // Defer until after logging is initialized.
     memory = Core::Memory::Instance();
     controller = Common::Singleton<Input::GameController>::Instance();
@@ -263,7 +266,7 @@ void Emulator::Run(const std::filesystem::path& file) {
 }
 
 void Emulator::LoadSystemModules(const std::filesystem::path& file, std::string game_serial) {
-    constexpr std::array<SysModules, 10> ModulesToLoad{
+    constexpr std::array<SysModules, 14> ModulesToLoad{
         {{"libSceNgs2.sprx", &Libraries::Ngs2::RegisterlibSceNgs2},
          {"libSceFiber.sprx", &Libraries::Fiber::RegisterlibSceFiber},
          {"libSceUlt.sprx", nullptr},
